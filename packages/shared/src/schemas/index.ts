@@ -1,18 +1,4 @@
-// Branded types
-export { IssueId, LabelId, ProjectId } from './types/index.js';
-
-// Domain models
-export type {
-  Issue,
-  IssueStatus,
-  IssuePriority,
-  Label,
-  Project,
-} from './models/index.js';
-
-// Validation schemas
 export {
-  // Issue
   issueIdSchema,
   issueStatusSchema,
   issuePrioritySchema,
@@ -22,7 +8,9 @@ export {
   type IssueDto,
   type CreateIssueDto,
   type UpdateIssueDto,
-  // Label
+} from './issue.js';
+
+export {
   labelIdSchema,
   labelSchema,
   createLabelSchema,
@@ -30,7 +18,9 @@ export {
   type LabelDto,
   type CreateLabelDto,
   type UpdateLabelDto,
-  // Project
+} from './label.js';
+
+export {
   projectIdSchema,
   projectSchema,
   createProjectSchema,
@@ -38,4 +28,4 @@ export {
   type ProjectDto,
   type CreateProjectDto,
   type UpdateProjectDto,
-} from './schemas/index.js';
+} from './project.js';
