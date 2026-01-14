@@ -18,7 +18,7 @@ export default defineWorkspace([
     },
   },
   {
-    extends: './vitest.config.ts',
+    extends: './packages/frontend/vite.config.ts',
     test: {
       name: 'frontend',
       root: './packages/frontend',
