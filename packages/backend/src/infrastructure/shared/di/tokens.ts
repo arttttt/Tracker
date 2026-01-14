@@ -3,6 +3,9 @@
  * Use these tokens with @inject() decorator.
  */
 export const DI_TOKENS = {
+  // Data Sources
+  JsonlSource: 'JsonlSource',
+
   // Repositories
   IssueRepository: 'IssueRepository',
   LabelRepository: 'LabelRepository',
