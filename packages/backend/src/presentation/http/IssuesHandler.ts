@@ -1,9 +1,10 @@
 import 'reflect-metadata';
-import { injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { IssueId, issueIdSchema } from '@bealin/shared';
-import { ListIssuesUseCase } from '@domain/usecases/ListIssuesUseCase.js';
-import { GetIssueUseCase } from '@domain/usecases/GetIssueUseCase.js';
+import type { ListIssuesUseCase } from '../../domain/usecases/ListIssuesUseCase.js';
+import type { GetIssueUseCase } from '../../domain/usecases/GetIssueUseCase.js';
+import { DI_TOKENS } from '../../infrastructure/shared/di/tokens.js';
 import { IssueMapper } from './IssueMapper.js';
 
 interface ErrorResponse {
@@ -20,7 +21,9 @@ interface GetIssueParams {
 @injectable()
 export class IssuesHandler {
   constructor(
+    @inject(DI_TOKENS.ListIssuesUseCase)
     private readonly listIssuesUseCase: ListIssuesUseCase,
+    @inject(DI_TOKENS.GetIssueUseCase)
     private readonly getIssueUseCase: GetIssueUseCase,
   ) {}
 

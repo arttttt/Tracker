@@ -16,7 +16,7 @@ const issuesHandler = container.resolve(IssuesHandler);
 issuesHandler.registerRoutes(server);
 
 const start = async () => {
-  const port = parseInt(process.env['PORT'] ?? '3000', 10);
+  const port = parseInt(process.env['PORT'] ?? '4000', 10);
   const host = process.env['HOST'] ?? '0.0.0.0';
 
   try {
