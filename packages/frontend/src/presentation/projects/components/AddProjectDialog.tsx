@@ -109,8 +109,8 @@ export function AddProjectDialog({ isOpen, onClose, onProjectAdded, preventClose
                   value={path}
                   placeholder="/path/to/project"
                   className={cn(
-                    'pr-8',
-                    'focus-visible:ring-0 focus-visible:ring-offset-0',
+                    'pr-8 pointer-events-none',
+                    'focus:ring-0 focus:border-input focus-visible:ring-0 focus-visible:ring-offset-0',
                     error && 'border-destructive',
                     validationResult?.valid && path.trim() && 'border-green-600',
                   )}
