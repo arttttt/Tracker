@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -14,7 +13,6 @@ interface RemoveProjectDialogProps {
   onClose: () => void;
   project: Project | null;
   onConfirm: () => void;
-  isActiveProject: boolean;
 }
 
 export function RemoveProjectDialog({
@@ -22,27 +20,8 @@ export function RemoveProjectDialog({
   onClose,
   project,
   onConfirm,
-  isActiveProject,
 }: RemoveProjectDialogProps) {
   if (!project) return null;
-
-  if (isActiveProject) {
-    return (
-      <Dialog open={isOpen} onOpenChange={(open: boolean) => !open && onClose()}>
-        <DialogContent className="sm:max-w-[400px]">
-          <DialogHeader>
-            <DialogTitle>Cannot remove active project</DialogTitle>
-            <DialogDescription>
-              Please switch to another project first before removing this one.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button onClick={onClose}>OK</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
-  }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open: boolean) => !open && onClose()}>
