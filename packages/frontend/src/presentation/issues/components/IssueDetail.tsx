@@ -1,5 +1,6 @@
 import { cn } from '@presentation/shared/lib/utils';
 import type { IssueViewModel } from '../types/IssueViewModel';
+import { IssueDetailBreadcrumb } from './IssueDetailBreadcrumb';
 
 interface IssueDetailProps {
   issue: IssueViewModel;
@@ -10,9 +11,7 @@ export function IssueDetail({ issue }: IssueDetailProps) {
     <div className="flex h-full">
       <div className="flex flex-1 flex-col gap-8 p-8">
         <header className="flex flex-col gap-3">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>{issue.id}</span>
-          </div>
+          <IssueDetailBreadcrumb issueId={issue.id} />
           <h1 className="text-xl font-medium text-foreground">{issue.title}</h1>
         </header>
 
