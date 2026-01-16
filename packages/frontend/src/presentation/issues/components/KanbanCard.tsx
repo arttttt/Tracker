@@ -18,7 +18,7 @@ export function KanbanCard({ issue }: KanbanCardProps) {
           <span>{issue.id}</span>
           <PriorityBadge priority={issue.priority} className={issue.priorityColor} />
         </div>
-        <h3 className="line-clamp-2 text-sm font-medium">{issue.title}</h3>
+        <h3 className="line-clamp-2 text-sm font-medium text-text-primary">{issue.title}</h3>
         {issue.labels.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1">
             {issue.labels.map((label) => (
