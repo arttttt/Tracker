@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
-import type { AppConfig, Project } from '../../domain/entities/AppConfig.js';
+import type { Project } from '../../domain/entities/AppConfig.js';
 import type { ConfigRepository } from '../../domain/repositories/ConfigRepository.js';
 import { DI_TOKENS } from '../shared/di/tokens.js';
 

@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ConfigRepositoryImpl } from './ConfigRepositoryImpl.js';
 import { existsSync } from 'node:fs';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { homedir } from 'node:os';
 
 vi.mock('node:fs', () => ({
   existsSync: vi.fn(),
