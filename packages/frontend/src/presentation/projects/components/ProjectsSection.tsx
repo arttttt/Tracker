@@ -67,11 +67,6 @@ export function ProjectsSection() {
         isOpen={projectToRemove !== null}
         onClose={() => setProjectToRemove(null)}
         project={projectToRemove}
-        isActiveProject={
-          projectToRemove !== null &&
-          activeProject !== null &&
-          projectToRemove.id.equals(activeProject.id)
-        }
         onConfirm={() => void handleRemoveProject()}
       />
     </SidebarSection>

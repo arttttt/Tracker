@@ -58,6 +58,8 @@ export function useProjectsViewModel(): ProjectsViewModelResult {
     mutationFn: (id: string) => projectRepo.removeProject(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['projects'] });
+      void queryClient.invalidateQueries({ queryKey: ['activeProject'] });
+      void queryClient.invalidateQueries({ queryKey: ['issues'] });
     },
   });
 
