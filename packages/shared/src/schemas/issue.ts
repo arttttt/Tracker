@@ -19,12 +19,21 @@ export const issuePrioritySchema = z.enum([
   'urgent',
 ]);
 
+export const issueTypeSchema = z.enum([
+  'bug',
+  'feature',
+  'task',
+  'epic',
+  'chore',
+]);
+
 export const issueSchema = z.object({
   id: issueIdSchema,
   title: z.string().min(1),
   description: z.string().optional().default(''),
   status: issueStatusSchema,
   priority: issuePrioritySchema,
+  type: issueTypeSchema,
   labels: z.array(labelIdSchema),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
@@ -35,6 +44,7 @@ export const createIssueSchema = z.object({
   description: z.string().optional().default(''),
   status: issueStatusSchema.optional().default('backlog'),
   priority: issuePrioritySchema.optional().default('none'),
+  type: issueTypeSchema.optional().default('task'),
   labels: z.array(labelIdSchema).optional().default([]),
 });
 
@@ -43,6 +53,7 @@ export const updateIssueSchema = z.object({
   description: z.string().optional(),
   status: issueStatusSchema.optional(),
   priority: issuePrioritySchema.optional(),
+  type: issueTypeSchema.optional(),
   labels: z.array(labelIdSchema).optional(),
 });
 

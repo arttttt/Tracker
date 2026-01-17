@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import type { Issue, IssueStatus, IssuePriority } from '@bealin/shared';
+import type { Issue, IssueStatus, IssuePriority, IssueType } from '@bealin/shared';
 import { IssueId } from '@bealin/shared';
 import type { IssueRepository } from '../../domain/repositories/IssueRepository.js';
 import { DI_TOKENS } from '../../infrastructure/shared/di/tokens.js';
@@ -65,6 +65,7 @@ export class IssueRepositoryImpl implements IssueRepository {
       description: raw.description ?? '',
       status: this.mapStatus(raw.status),
       priority: this.mapPriority(raw.priority),
+      type: this.mapType(raw.issue_type),
       labels: [],
       createdAt: new Date(raw.created_at),
       updatedAt: new Date(raw.updated_at),
@@ -96,6 +97,22 @@ export class IssueRepositoryImpl implements IssueRepository {
         return 'low';
       default:
         return 'none';
+    }
+  }
+
+  private mapType(rawType?: string): IssueType {
+    switch (rawType) {
+      case 'bug':
+        return 'bug';
+      case 'feature':
+        return 'feature';
+      case 'epic':
+        return 'epic';
+      case 'chore':
+        return 'chore';
+      case 'task':
+      default:
+        return 'task';
     }
   }
 }

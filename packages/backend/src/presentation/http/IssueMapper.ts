@@ -11,6 +11,7 @@ export class IssueMapper {
       description: issue.description,
       status: issue.status,
       priority: issue.priority,
+      type: issue.type,
       labels: issue.labels.map((label) => label.value),
       createdAt: issue.createdAt.toISOString(),
       updatedAt: issue.updatedAt.toISOString(),

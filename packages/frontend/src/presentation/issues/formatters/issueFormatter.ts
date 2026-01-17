@@ -1,4 +1,4 @@
-import type { Issue, IssueStatus, IssuePriority } from '@bealin/shared';
+import type { Issue, IssueStatus, IssuePriority, IssueType } from '@bealin/shared';
 import type { IssueViewModel } from '../types/IssueViewModel';
 
 const STATUS_LABELS: Record<IssueStatus, string> = {
@@ -33,6 +33,22 @@ const PRIORITY_COLORS: Record<IssuePriority, string> = {
   urgent: 'text-priority-urgent',
 };
 
+const TYPE_LABELS: Record<IssueType, string> = {
+  bug: 'Bug',
+  feature: 'Feature',
+  task: 'Task',
+  epic: 'Epic',
+  chore: 'Chore',
+};
+
+const TYPE_COLORS: Record<IssueType, string> = {
+  bug: 'text-type-bug',
+  feature: 'text-type-feature',
+  task: 'text-type-task',
+  epic: 'text-type-epic',
+  chore: 'text-type-chore',
+};
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-US', {
     month: 'short',
@@ -49,6 +65,8 @@ export function formatIssue(issue: Issue): IssueViewModel {
     statusColor: STATUS_COLORS[issue.status],
     priority: PRIORITY_LABELS[issue.priority],
     priorityColor: PRIORITY_COLORS[issue.priority],
+    type: TYPE_LABELS[issue.type],
+    typeColor: TYPE_COLORS[issue.type],
     createdAt: formatDate(issue.createdAt),
     updatedAt: formatDate(issue.updatedAt),
     labels: issue.labels.map((label) => label.value),

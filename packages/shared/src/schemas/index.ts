@@ -2,6 +2,7 @@ export {
   issueIdSchema,
   issueStatusSchema,
   issuePrioritySchema,
+  issueTypeSchema,
   issueSchema,
   createIssueSchema,
   updateIssueSchema,

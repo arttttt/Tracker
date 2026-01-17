@@ -6,6 +6,7 @@ export type {
   Issue,
   IssueStatus,
   IssuePriority,
+  IssueType,
   Label,
   Project,
 } from './models/index.js';
@@ -16,6 +17,7 @@ export {
   issueIdSchema,
   issueStatusSchema,
   issuePrioritySchema,
+  issueTypeSchema,
   issueSchema,
   createIssueSchema,
   updateIssueSchema,

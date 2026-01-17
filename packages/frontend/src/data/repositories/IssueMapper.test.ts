@@ -9,6 +9,7 @@ function createMockDto(overrides: Partial<IssueDto> = {}): IssueDto {
     description: 'Test description',
     status: 'todo',
     priority: 'medium',
+    type: 'task',
     labels: ['label-1'],
     createdAt: '2026-01-14T00:00:00.000Z',
     updatedAt: '2026-01-14T00:00:00.000Z',
