@@ -30,6 +30,10 @@ export function IssueDetail({ issue }: IssueDetailProps) {
           </div>
         )}
 
+        {issue.type === 'Epic' && (
+          <ChildrenSection children={issue.children} />
+        )}
+
         {(issue.blockedBy.length > 0 || issue.blocks.length > 0) && (
           <div className="flex flex-col gap-4">
             {issue.blockedBy.length > 0 && (
@@ -248,6 +252,92 @@ function DependencyItem({ dependency }: DependencyItemProps) {
         {dependency.id.toUpperCase()}
       </span>
       <span className="truncate text-[13px] text-text-primary" title={dependency.title}>
+        {truncatedTitle}
+      </span>
+    </Link>
+  );
+}
+
+interface ChildrenSectionProps {
+  children: readonly DependencyViewModel[];
+}
+
+function ChildrenSection({ children }: ChildrenSectionProps) {
+  // Sort children: In Progress first, then Todo, then Done/Canceled
+  const statusOrder: Record<string, number> = {
+    'In Progress': 0,
+    'Todo': 1,
+    'Backlog': 2,
+    'Done': 3,
+    'Canceled': 4,
+  };
+
+  const sortedChildren = [...children].sort((a, b) => {
+    const orderA = statusOrder[a.status] ?? 99;
+    const orderB = statusOrder[b.status] ?? 99;
+    return orderA - orderB;
+  });
+
+  const completedCount = children.filter(
+    (child) => child.status === 'Done' || child.status === 'Canceled'
+  ).length;
+  const totalCount = children.length;
+
+  if (totalCount === 0) {
+    return (
+      <div className="mt-6">
+        <h3 className="text-sm font-medium text-text-primary">Sub-issues</h3>
+        <p className="mt-2 text-sm italic text-text-tertiary">No sub-issues yet</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6">
+      <div className="flex items-center gap-2">
+        <h3 className="text-sm font-medium text-text-primary">Sub-issues</h3>
+        <span className="text-sm text-text-secondary">
+          ({completedCount}/{totalCount})
+        </span>
+      </div>
+      <div className="mt-2 rounded-lg border border-border-subtle">
+        {sortedChildren.map((child, index) => (
+          <ChildItem
+            key={child.id}
+            child={child}
+            isLast={index === sortedChildren.length - 1}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface ChildItemProps {
+  child: DependencyViewModel;
+  isLast: boolean;
+}
+
+function ChildItem({ child, isLast }: ChildItemProps) {
+  const truncatedTitle =
+    child.title.length > 50
+      ? `${child.title.slice(0, 50)}...`
+      : child.title;
+
+  return (
+    <Link
+      to="/issues/$issueId"
+      params={{ issueId: child.id }}
+      className={cn(
+        'flex items-center gap-2 px-3 py-2 hover:bg-background-hover',
+        !isLast && 'border-b border-border-subtle'
+      )}
+    >
+      <StatusIcon status={child.status} className={child.statusColor} />
+      <span className="text-[13px] font-medium text-text-secondary">
+        {child.id.toUpperCase()}
+      </span>
+      <span className="truncate text-[13px] text-text-primary" title={child.title}>
         {truncatedTitle}
       </span>
     </Link>

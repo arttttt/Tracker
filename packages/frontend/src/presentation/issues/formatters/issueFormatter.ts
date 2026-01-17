@@ -83,6 +83,7 @@ export function formatIssue(issue: Issue): IssueViewModel {
     labels: issue.labels.map((label) => label.value),
     blocks: issue.blocks.map(formatDependency),
     blockedBy: issue.blockedBy.map(formatDependency),
+    children: issue.children.map(formatDependency),
   };
 }
 

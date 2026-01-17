@@ -27,4 +27,5 @@ export interface Issue {
   readonly updatedAt: Date;
   readonly blocks: readonly IssueDependency[];
   readonly blockedBy: readonly IssueDependency[];
+  readonly children: readonly IssueDependency[];
 }

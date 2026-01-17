@@ -46,6 +46,7 @@ export const issueSchema = z.object({
   updatedAt: z.string().datetime(),
   blocks: z.array(issueDependencySchema).optional().default([]),
   blockedBy: z.array(issueDependencySchema).optional().default([]),
+  children: z.array(issueDependencySchema).optional().default([]),
 });
 
 export const createIssueSchema = z.object({

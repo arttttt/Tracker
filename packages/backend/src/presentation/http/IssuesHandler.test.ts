@@ -20,6 +20,7 @@ function createMockIssue(overrides: Partial<Issue> = {}): Issue {
     updatedAt: new Date('2026-01-14T12:00:00.000Z'),
     blocks: [],
     blockedBy: [],
+    children: [],
     ...overrides,
   };
 }

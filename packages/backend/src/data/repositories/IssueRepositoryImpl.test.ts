@@ -17,7 +17,9 @@ function createMockSqliteSource(): SqliteSource {
   return {
     getBlockedBy: vi.fn().mockReturnValue([]),
     getBlocks: vi.fn().mockReturnValue([]),
+    getChildren: vi.fn().mockReturnValue([]),
     getAllDependencies: vi.fn().mockReturnValue(new Map()),
+    getAllChildren: vi.fn().mockReturnValue(new Map()),
   } as unknown as SqliteSource;
 }
 

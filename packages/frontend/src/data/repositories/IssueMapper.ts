@@ -29,6 +29,7 @@ export class IssueMapper {
       updatedAt: new Date(dto.updatedAt),
       blocks: (dto.blocks ?? []).map(IssueMapper.dependencyToDomain),
       blockedBy: (dto.blockedBy ?? []).map(IssueMapper.dependencyToDomain),
+      children: (dto.children ?? []).map(IssueMapper.dependencyToDomain),
     };
   }
 

@@ -25,4 +25,5 @@ export interface IssueViewModel {
   readonly labels: readonly string[];
   readonly blocks: readonly DependencyViewModel[];
   readonly blockedBy: readonly DependencyViewModel[];
+  readonly children: readonly DependencyViewModel[];
 }
