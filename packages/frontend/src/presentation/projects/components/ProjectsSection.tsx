@@ -3,7 +3,7 @@ import { Plus, Loader2 } from 'lucide-react';
 import { cn } from '@presentation/shared/lib/utils';
 import { SidebarSection } from '@presentation/shared/components/Sidebar/SidebarSection';
 import { useProjectsViewModel } from '../viewmodels/useProjectsViewModel';
-import { AddProjectDialog } from './AddProjectDialog';
+import { useProjectContext } from '@presentation/shared/providers/ProjectProvider';
 import { RemoveProjectDialog } from './RemoveProjectDialog';
 import { ProjectItem } from './ProjectItem';
 import type { Project } from '@domain/entities/Project';
@@ -11,7 +11,7 @@ import type { Project } from '@domain/entities/Project';
 export function ProjectsSection() {
   const { projects, activeProject, switchProject, removeProject, isLoading, isSwitchingProject } =
     useProjectsViewModel();
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const { showAddProjectDialog } = useProjectContext();
   const [projectToRemove, setProjectToRemove] = useState<Project | null>(null);
 
   const handleRemoveProject = async () => {
@@ -45,7 +45,7 @@ export function ProjectsSection() {
           </div>
 
           <button
-            onClick={() => setIsAddDialogOpen(true)}
+            onClick={showAddProjectDialog}
             className={cn(
               'mx-2 mt-1 flex w-[calc(100%-16px)] items-center gap-2 rounded-md px-2.5 py-1.5 text-sm',
               'text-sidebar-foreground/60 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground',
@@ -56,12 +56,6 @@ export function ProjectsSection() {
           </button>
         </>
       )}
-
-      <AddProjectDialog
-        isOpen={isAddDialogOpen}
-        onClose={() => setIsAddDialogOpen(false)}
-        onProjectAdded={() => setIsAddDialogOpen(false)}
-      />
 
       <RemoveProjectDialog
         isOpen={projectToRemove !== null}
