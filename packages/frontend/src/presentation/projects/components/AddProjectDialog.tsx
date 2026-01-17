@@ -158,7 +158,6 @@ export function AddProjectDialog({ isOpen, onClose, onProjectAdded, preventClose
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={validationResult?.suggestedName || 'Auto-detected from path'}
-              autoFocus
             />
             <p className="text-xs text-muted-foreground">
               Leave empty to use the folder name
