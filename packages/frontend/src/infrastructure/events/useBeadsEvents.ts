@@ -29,6 +29,7 @@ export function useBeadsEvents(): void {
       eventSource.addEventListener('issues-changed', () => {
         // Invalidate all issue-related queries to trigger refetch
         void queryClient.invalidateQueries({ queryKey: ['issues'] });
+        void queryClient.invalidateQueries({ queryKey: ['issue'] }); // Individual issue detail queries
         void queryClient.invalidateQueries({ queryKey: ['labels'] });
       });
 

@@ -32,9 +32,12 @@ export class EventsHandler {
    * - issues-changed: Fired when any .jsonl file changes in the watched project
    */
   private async streamEvents(
-    _request: FastifyRequest,
+    request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
+    // Hijack the response to prevent Fastify from interfering with SSE
+    await reply.hijack();
+
     // Set SSE headers
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
@@ -67,10 +70,14 @@ export class EventsHandler {
       }
     }, 30000); // 30 second heartbeat
 
-    // Cleanup on close
-    _request.raw.on('close', () => {
-      clearInterval(heartbeatInterval);
-      this.watcher.removeClient(clientId);
+    // Return a Promise that resolves when the connection closes
+    // This keeps the handler open for the duration of the SSE connection
+    return new Promise<void>((resolve) => {
+      request.raw.on('close', () => {
+        clearInterval(heartbeatInterval);
+        this.watcher.removeClient(clientId);
+        resolve();
+      });
     });
   }
 }
