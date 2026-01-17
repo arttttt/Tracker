@@ -69,15 +69,17 @@ export class IssueRepositoryImpl implements IssueRepository {
       issueMap.set(raw.id, raw);
     }
 
-    // Get all dependencies at once
+    // Get all dependencies and children at once
     const dbPath = await this.getDatabasePath();
     const issueIds = rawIssues.map((r) => r.id);
     const allDeps = this.sqliteSource.getAllDependencies(dbPath, issueIds);
+    const allChildren = this.sqliteSource.getAllChildren(dbPath, issueIds);
 
-    // Map issues with dependencies
+    // Map issues with dependencies and children
     return rawIssues.map((raw) => {
       const deps = allDeps.get(raw.id) ?? { blockedBy: [], blocks: [] };
-      return this.mapToIssue(raw, deps, issueMap);
+      const children = allChildren.get(raw.id) ?? [];
+      return this.mapToIssue(raw, deps, children, issueMap);
     });
   }
 
@@ -96,17 +98,19 @@ export class IssueRepositoryImpl implements IssueRepository {
       issueMap.set(r.id, r);
     }
 
-    // Get dependencies for this issue
+    // Get dependencies and children for this issue
     const dbPath = await this.getDatabasePath();
     const blockedBy = this.sqliteSource.getBlockedBy(dbPath, id.value);
     const blocks = this.sqliteSource.getBlocks(dbPath, id.value);
+    const children = this.sqliteSource.getChildren(dbPath, id.value);
 
-    return this.mapToIssue(raw, { blockedBy, blocks }, issueMap);
+    return this.mapToIssue(raw, { blockedBy, blocks }, children, issueMap);
   }
 
   private mapToIssue(
     raw: RawIssue,
     deps: { blockedBy: string[]; blocks: string[] },
+    children: string[],
     issueMap: Map<string, RawIssue>,
   ): Issue {
     return {
@@ -121,6 +125,7 @@ export class IssueRepositoryImpl implements IssueRepository {
       updatedAt: new Date(raw.updated_at),
       blocks: this.mapDependencies(deps.blocks, issueMap),
       blockedBy: this.mapDependencies(deps.blockedBy, issueMap),
+      children: this.mapDependencies(children, issueMap),
     };
   }
 

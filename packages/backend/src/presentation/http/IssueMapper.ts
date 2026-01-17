@@ -17,6 +17,7 @@ export class IssueMapper {
       updatedAt: issue.updatedAt.toISOString(),
       blocks: issue.blocks.map(IssueMapper.dependencyToDto),
       blockedBy: issue.blockedBy.map(IssueMapper.dependencyToDto),
+      children: issue.children.map(IssueMapper.dependencyToDto),
     };
   }
 

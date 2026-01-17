@@ -17,6 +17,7 @@ function createMockDto(overrides: Partial<IssueDto> = {}): IssueDto {
     updatedAt: '2026-01-14T00:00:00.000Z',
     blocks: [],
     blockedBy: [],
+    children: [],
     ...overrides,
   };
 }

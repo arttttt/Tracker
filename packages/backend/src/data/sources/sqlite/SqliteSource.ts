@@ -58,6 +58,70 @@ export class SqliteSource {
   }
 
   /**
+   * Get all child issues of a parent issue.
+   * @param dbPath - Path to beads.db
+   * @param parentId - The parent issue ID
+   * @returns Array of child issue IDs
+   */
+  getChildren(dbPath: string, parentId: string): string[] {
+    try {
+      const db = new Database(dbPath, { readonly: true });
+      const stmt = db.prepare(
+        'SELECT issue_id FROM dependencies WHERE depends_on_id = ? AND type = ?',
+      );
+      const rows = stmt.all(parentId, 'parent-child') as { issue_id: string }[];
+      db.close();
+      return rows.map((r) => r.issue_id);
+    } catch {
+      // Database might not exist or be locked
+      return [];
+    }
+  }
+
+  /**
+   * Get all children for multiple issues at once (batch operation).
+   * @param dbPath - Path to beads.db
+   * @param issueIds - Array of issue IDs
+   * @returns Map of issue ID to array of child issue IDs
+   */
+  getAllChildren(dbPath: string, issueIds: string[]): Map<string, string[]> {
+    const result = new Map<string, string[]>();
+
+    // Initialize all issues with empty arrays
+    for (const id of issueIds) {
+      result.set(id, []);
+    }
+
+    if (issueIds.length === 0) {
+      return result;
+    }
+
+    try {
+      const db = new Database(dbPath, { readonly: true });
+
+      // Get all children for the given parent IDs
+      const placeholders = issueIds.map(() => '?').join(',');
+      const stmt = db.prepare(
+        `SELECT issue_id, depends_on_id FROM dependencies WHERE depends_on_id IN (${placeholders}) AND type = 'parent-child'`,
+      );
+      const rows = stmt.all(...issueIds) as { issue_id: string; depends_on_id: string }[];
+
+      for (const row of rows) {
+        const entry = result.get(row.depends_on_id);
+        if (entry) {
+          entry.push(row.issue_id);
+        }
+      }
+
+      db.close();
+    } catch {
+      // Database might not exist or be locked
+    }
+
+    return result;
+  }
+
+  /**
    * Get all dependencies for multiple issues at once (batch operation).
    * @param dbPath - Path to beads.db
    * @param issueIds - Array of issue IDs
