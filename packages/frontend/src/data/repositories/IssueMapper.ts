@@ -16,6 +16,7 @@ export class IssueMapper {
       description: dto.description,
       status: dto.status,
       priority: dto.priority,
+      type: dto.type,
       labels: dto.labels.map((labelId) => new LabelId(labelId)),
       createdAt: new Date(dto.createdAt),
       updatedAt: new Date(dto.updatedAt),

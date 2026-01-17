@@ -12,6 +12,7 @@ function createMockIssue(overrides: Partial<Issue> = {}): Issue {
     description: 'Test description',
     status: 'todo',
     priority: 'medium',
+    type: 'task',
     labels: [new LabelId('label-1')],
     createdAt: new Date('2026-01-14'),
     updatedAt: new Date('2026-01-14'),

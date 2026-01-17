@@ -10,6 +10,7 @@ function createMockIssue(overrides: Partial<Issue> = {}): Issue {
     description: 'Test description',
     status: 'todo',
     priority: 'medium',
+    type: 'task',
     labels: [new LabelId('label-1')],
     createdAt: new Date('2026-01-14'),
     updatedAt: new Date('2026-01-14'),
@@ -67,6 +68,18 @@ describe('issueFormatter', () => {
       // THEN
       expect(result.priority).toBe('High');
       expect(result.priorityColor).toBe('text-priority-high');
+    });
+
+    it('formats type as label with color', () => {
+      // GIVEN
+      const issue = createMockIssue({ type: 'bug' });
+
+      // WHEN
+      const result = formatIssue(issue);
+
+      // THEN
+      expect(result.type).toBe('Bug');
+      expect(result.typeColor).toBe('text-type-bug');
     });
 
     it('formats createdAt date as short format', () => {
