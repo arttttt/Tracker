@@ -86,7 +86,7 @@ export function AddProjectDialog({ isOpen, onClose, onProjectAdded, preventClose
       if (!open) handleClose();
     }}>
       <DialogContent
-        className="sm:max-w-[480px]"
+        className="sm:max-w-[480px] select-none"
         showCloseButton={!preventClose}
         onEscapeKeyDown={(e) => (isBrowsing || preventClose) && e.preventDefault()}
         onPointerDownOutside={(e) => preventClose && e.preventDefault()}
